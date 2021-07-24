@@ -2,22 +2,31 @@ import {createContext, PropsWithChildren, useCallback, useEffect, useState} from
 import axios from "axios";
 
 const initialState = {
-   dataPosts: [
+   dataUser: [
       {
-         userId: 0,
+         
          id: 0,
-         title: '',
-         body: ''
+         name: ''
       },
+   ],
+   dataComments: [
+       {
+           postId: 0,
+           id: 0,
+           name: '',
+           body: '',
+       }
    ],
    loading: false,
    error: false
 }
 
-type InitialState = typeof initialState.dataPosts[0]
+type InitialState = typeof initialState.dataUser[0]
+type InitialCommentsState = typeof initialState.dataComments[0]
 
 type Store = {
-   dataPosts?: InitialState[];
+   dataUser?: InitialState[];
+   dataComments?: InitialCommentsState[];
    loading?: boolean;
    error?: boolean;
 }
@@ -27,37 +36,46 @@ const AppContext = createContext<Store>(initialState);
 interface Props extends PropsWithChildren<any> {}
 
 const FetchContext = (props: Props) => {
-   const [posts, setPosts] = useState(initialState.dataPosts);
+   const [users, setUsers ] = useState(initialState.dataUser);
+   const [comments, setComments] = useState(initialState.dataComments)
    const [loading, setLoading] = useState(initialState.loading);
-   const [error] =useState(initialState.error)
+   const [error] =useState(initialState.error);
 
-   const getPosts = useCallback(async () => {
+   const getData = useCallback(async () => {
       try {
-         const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-         if(response.status === 200) {
-            setPosts(response.data);
+         const responsePosts = await axios.get('https://jsonplaceholder.typicode.com/users');
+         const responseComments = await axios.get('https://jsonplaceholder.typicode.com/comments');
+         if(responsePosts.status === 200) {
+            setUsers(responsePosts.data);
+            console.log(responsePosts.data);
+            setLoading(false);
          }
-         if(response.status === 404) {
+         if(responseComments.status === 200) {
+             setComments(responseComments.data);
+             setLoading(false);
+             console.log(responseComments.data);
+         }
+         if(responsePosts.status === 404 || responseComments.status === 404) {
             console.log('error!');
-            setPosts([]);
+            setUsers([]);
+            setComments([]);
          }
-         setLoading(false);
+         
       } catch (err) {
          console.error(err);
          console.error(err.message);
          throw new Error('Could not get the data!')
       }
-   }, [])
-
+   }, []);
 
 
    useEffect(() => {
        setLoading(true);
-       getPosts();
-   }, [getPosts])
+       getData();
+   }, [getData])
 
    return (
-      <AppContext.Provider value={{dataPosts: posts, loading, error}}>
+      <AppContext.Provider value={{dataUser: users, dataComments: comments, loading, error}}>
          {props.children}
       </AppContext.Provider>
    );

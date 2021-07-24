@@ -12,10 +12,10 @@ export const Routes: FC = () => {
             <Route exact path='/'>
                <Redirect to='/posts' />
             </Route>
-            <Route path='/posts'>
+            <Route exact path='/posts'>
                <Posts helloMessage={helloMessage}/>
             </Route>
-            <Route path='/post/:id'>
+            <Route path='/posts/:id'>
                <PostDetails />
             </Route>
          </Switch>

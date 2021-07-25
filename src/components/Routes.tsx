@@ -16,7 +16,7 @@ export const Routes: FC = () => {
                <Posts helloMessage={helloMessage}/>
             </Route>
             <Route path='/posts/:id'>
-               <PostDetails />
+               <PostDetails helloMessage={helloMessage}/>
             </Route>
          </Switch>
       </div>

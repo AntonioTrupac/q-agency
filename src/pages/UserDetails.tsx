@@ -1,6 +1,6 @@
 import {FC, useState, useCallback, useEffect} from 'react';
 import axios from 'axios';
-import useFetch from '../hooks/useFetch';
+// import useFetch from '../hooks/useFetch';
 import { PostType } from '../types/types';
 
 type UserType = {
@@ -12,7 +12,7 @@ type UserProps = {
     user?: UserType[];
     isLoading?: boolean;
     error?: string;
-    post?: PostType;
+    post?: PostType | null;
 }
 
 

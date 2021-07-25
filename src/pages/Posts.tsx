@@ -13,7 +13,7 @@ type PostsProps = {
 
 export const Posts: FC<PostsProps> = (props) => {
    const [posts, setPosts] = useState<PostType[]>([]);
-   const postComponent = 'post component';
+   const hello = 'post component';
 
    const [loading, setLoading] = useState<boolean>(false);
    const [error, setError] = useState<string>("");
@@ -43,7 +43,7 @@ export const Posts: FC<PostsProps> = (props) => {
 
 
    useEffect(()=> {
-      console.log(`${props.helloMessage} ${postComponent}`)
+      console.log(`${props.helloMessage} ${hello}`)
    }, [props.helloMessage])
 
    

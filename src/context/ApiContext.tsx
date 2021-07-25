@@ -1,4 +1,4 @@
-import {createContext, PropsWithChildren, useCallback, useEffect, useState} from "react";
+import {createContext, PropsWithChildren, useCallback, useEffect, useState, useMemo} from "react";
 import axios from "axios";
 
 const initialState = {
@@ -39,7 +39,7 @@ const FetchContext = (props: Props) => {
    const [users, setUsers ] = useState(initialState.dataUser);
    const [comments, setComments] = useState(initialState.dataComments)
    const [loading, setLoading] = useState(initialState.loading);
-   const [error] =useState(initialState.error);
+   const [error] = useState(initialState.error);
 
    const getData = useCallback(async () => {
       try {
@@ -59,12 +59,12 @@ const FetchContext = (props: Props) => {
             console.log('error!');
             setUsers([]);
             setComments([]);
+            throw new Error('Could not get the data!')
          }
          
       } catch (err) {
          console.error(err);
          console.error(err.message);
-         throw new Error('Could not get the data!')
       }
    }, []);
 
@@ -73,9 +73,13 @@ const FetchContext = (props: Props) => {
        setLoading(true);
        getData();
    }, [getData])
+  
 
    return (
-      <AppContext.Provider value={{dataUser: users, dataComments: comments, loading, error}}>
+      <AppContext.Provider value={{dataUser: users,
+        dataComments: comments,
+        loading,
+        error}}>
          {props.children}
       </AppContext.Provider>
    );

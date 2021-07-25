@@ -1,157 +1,32 @@
-import { useEffect, useReducer, useRef } from 'react'
+import axios from "axios";
+import { useCallback, useEffect } from "react";
+import { useState } from "react";
 
+export function useFetch<T>(url: string) {
+    const [data, setData] = useState<T | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
 
-import axios, { AxiosRequestConfig } from 'axios'
-
-
-// State & hook output
-
-interface State<T> {
-
-  status: 'init' | 'fetching' | 'error' | 'fetched'
-
-  data?: T
-
-  error?: string
-
-}
-
-
-interface Cache<T> {
-
-  [url: string]: T
-
-}
-
-
-// discriminated union type
-
-type Action<T> =
-
-  | { type: 'request' }
-
-  | { type: 'success'; payload: T }
-
-  | { type: 'failure'; payload: string }
-
-
-function useFetch<T = unknown>(
-
-  url?: string,
-
-  options?: AxiosRequestConfig,
-
-): State<T> {
-
-  const cache = useRef<Cache<T>>({})
-
-  const cancelRequest = useRef<boolean>(false)
-
-
-  const initialState: State<T> = {
-
-    status: 'init',
-
-    error: undefined,
-
-    data: undefined,
-
-  }
-
-
-  // Keep state logic separated
-
-  const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
-
-    switch (action.type) {
-
-      case 'request':
-
-        return { ...initialState, status: 'fetching' }
-
-      case 'success':
-
-        return { ...initialState, status: 'fetched', data: action.payload }
-
-      case 'failure':
-
-        return { ...initialState, status: 'error', error: action.payload }
-
-      default:
-
-        return state
-
-    }
-
-  }
-
-
-  const [state, dispatch] = useReducer(fetchReducer, initialState)
-
-
-  useEffect(() => {
-
-    if (!url) {
-
-      return
-
-    }
-
-
-    const fetchData = async () => {
-
-      dispatch({ type: 'request' })
-
-
-      if (cache.current[url]) {
-
-        dispatch({ type: 'success', payload: cache.current[url] })
-
-      } else {
-
+    const fetchData = useCallback( async (url: string) => {
+        setLoading(true);
         try {
-
-          const response = await axios(url, options)
-
-          cache.current[url] = response.data
-
-
-          if (cancelRequest.current) return
-
-
-          dispatch({ type: 'success', payload: response.data })
-
-        } catch (error) {
-
-          if (cancelRequest.current) return
-
-
-          dispatch({ type: 'failure', payload: error.message })
-
+            const response = await axios.get(url);
+            if(response.status === 200) {
+            setData(response.data);
+            setLoading(false);
         }
+            if(response.status === 404) {
+            setError(response.statusText);
+        }
+        } catch (error) {
+            console.error(error.message);
+            setError(error.message);  
+        }
+    }, [])
 
-      }
+    useEffect(() => {
+        fetchData(url);
+    }, [fetchData, url]);
 
-    }
-
-
-    fetchData()
-
-
-    return () => {
-
-      cancelRequest.current = true
-
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  }, [url, options])
-
-
-  return state
-
+    return { data, loading, error};
 }
-
-
-export default useFetch

@@ -73,13 +73,16 @@ const FetchContext = (props: Props) => {
        setLoading(true);
        getData();
    }, [getData])
-  
+
+   const value = {
+       dataUser: users,
+       dataComments: comments,
+       loading,
+       error
+   };
 
    return (
-      <AppContext.Provider value={{dataUser: users,
-        dataComments: comments,
-        loading,
-        error}}>
+      <AppContext.Provider value={value}>
          {props.children}
       </AppContext.Provider>
    );

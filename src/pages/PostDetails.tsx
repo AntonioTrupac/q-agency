@@ -1,60 +1,53 @@
-import {FC, useState, useEffect, useCallback, useContext} from 'react';
-import {useParams} from 'react-router-dom';
+import { FC, useState, useEffect, useCallback, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import {PostType} from '../types/types';
+import { PostType } from '../types/types';
 import { UserDetails } from './UserDetails';
 import { AppContext } from '../context/ApiContext';
 import { useFetch } from '../hooks/useFetch';
+import { Comments } from './Comments';
 
 type PostDetailsProps = {
-    helloMessage: string;
-}
+  helloMessage: string;
+};
 
 type ParamTypes = {
-    id: string;
-}
+  id: string;
+};
 
 export const PostDetails: FC<PostDetailsProps> = (props) => {
-    // const [postDetails, setPostDetails] = useState<PostType>();
-    // const [isLoading, setIsLoading] = useState<boolean>(false);
-    // const [error, setError] = useState<string>("");
-    const hello = 'post details component';
-    const context = useContext(AppContext)
+  let { id } = useParams<ParamTypes>();
+  const context = useContext(AppContext);
+  const { data, loading } = useFetch<PostType>(
+    `https://jsonplaceholder.typicode.com/posts/${id}`
+  );
 
-    let { id } = useParams<ParamTypes>();
+  const hello = 'post details component';
 
-    const {data, loading } = useFetch<PostType>(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  useEffect(() => {
+    console.log(`${props.helloMessage}${hello}`);
+  }, [props.helloMessage]);
 
-    // const fetchPostDetails = useCallback(async () => {
-    // try {
-    //     const response = await axios.get(
-    //     `https://jsonplaceholder.typicode.com/posts/${id}`
-    //     );
-    //     if (response.status === 200) {
-    //     setPostDetails(response.data);
-    //     setIsLoading(false);
-    //     }
-    // } catch (error) {
-    //     console.error(error);
-    //     setError(error.message);
-    //     throw new Error("Something went wrong");
-    // }
-    // }, [id]);
+  const filterComments = context.dataComments?.filter(
+    (comment) => comment.postId === data?.id
+  );
 
-    // useEffect(() => {
-    // setIsLoading(true);
-    // fetchPostDetails();
-    // }, [fetchPostDetails]);
+  if (loading || context.loading) return <div>Loading...</div>;
 
-    // useEffect(() => {
-    //     console.log(`${props.helloMessage}${hello}`)
-    // }, [props.helloMessage])
-
-    return (
-    <div>
-        <UserDetails post={data} user={context.dataUser}/>
-        {data?.body}
-        {data?.title}
+  return (
+    <div className='details'>
+      <div className='details__title'>{data?.title}</div>
+      <div className='details__body'>{data?.body}</div>
+      {filterComments?.map((comment) => {
+        return (
+          <div key={comment.id} className='details__comments'>
+            <Comments comment={comment} />
+          </div>
+        );
+      })}
+      <div>
+        <UserDetails post={data} user={context.dataUser} />
+      </div>
     </div>
-    );
-}
+  );
+};

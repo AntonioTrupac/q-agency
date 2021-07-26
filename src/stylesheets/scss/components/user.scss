@@ -1,11 +1,11 @@
 .user-name {
-    padding: 0.5rem 0;
-    position: absolute;
-    bottom: 0;
-    right: 2rem;
+  padding: 1rem 0;
+  position: absolute;
+  bottom: 0;
+  right: 2rem;
 
-    & > p {
-        font-size: 20px;
-        text-transform: capitalize;
-    }
+  & > p {
+    font-size: 20px;
+    text-transform: capitalize;
+  }
 }

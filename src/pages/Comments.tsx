@@ -1,21 +1,20 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
 type CommentType = {
-    postId: number;
-    id: number;
-    name: string;
-    body: string;
-}
+  postId: number;
+  id: number;
+  name: string;
+  body: string;
+};
 
 type CommentProps = {
-    comment: CommentType
-}
+  comment: CommentType;
+};
 
 export const Comments: FC<CommentProps> = (props) => {
-
-    return (
-        <div className='comment'>
-            <p>{props.comment.body}</p>
-        </div>
-    )
-}
+  return (
+    <div className='comment'>
+      <p>{props.comment.body}</p>
+    </div>
+  );
+};

@@ -1,11 +1,11 @@
-import { FC, useState, useEffect, useCallback, useContext } from 'react';
+import { FC, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { PostType } from '../types/types';
-import { UserDetails } from './UserDetails';
+import { UserDetails } from '../components/UserDetails';
 import { AppContext } from '../context/ApiContext';
 import { useFetch } from '../hooks/useFetch';
-import { Comments } from './Comments';
+import { Comments } from '../components/Comments';
+import ReactLoading from 'react-loading';
 
 type PostDetailsProps = {
   helloMessage: string;
@@ -32,22 +32,33 @@ export const PostDetails: FC<PostDetailsProps> = (props) => {
     (comment) => comment.postId === data?.id
   );
 
-  if (loading || context.loading) return <div>Loading...</div>;
-
   return (
-    <div className='details'>
-      <div className='details__title'>{data?.title}</div>
-      <div className='details__body'>{data?.body}</div>
-      {filterComments?.map((comment) => {
-        return (
-          <div key={comment.id} className='details__comments'>
-            <Comments comment={comment} />
+    <div>
+      {loading || context.loading ? (
+        <div className='spinner'>
+          <ReactLoading
+            color='black'
+            type='spin'
+            width='300px'
+            height='300px'
+          />
+        </div>
+      ) : (
+        <div className='details'>
+          <div className='details__title'>{data?.title}</div>
+          <div className='details__body'>{data?.body}</div>
+          {filterComments?.map((comment) => {
+            return (
+              <div key={comment.id} className='details__comments'>
+                <Comments comment={comment} />
+              </div>
+            );
+          })}
+          <div>
+            <UserDetails post={data} user={context.dataUser} />
           </div>
-        );
-      })}
-      <div>
-        <UserDetails post={data} user={context.dataUser} />
-      </div>
+        </div>
+      )}
     </div>
   );
 };

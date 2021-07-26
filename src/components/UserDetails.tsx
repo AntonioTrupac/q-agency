@@ -1,12 +1,6 @@
 import { FC, useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-// import useFetch from '../hooks/useFetch';
-import { PostType } from '../types/types';
-
-type UserType = {
-  id: number;
-  name: string;
-};
+import { PostType, UserType } from '../types/types';
 
 type UserProps = {
   user?: UserType[];
@@ -16,17 +10,6 @@ type UserProps = {
 };
 
 export const UserDetails: FC<UserProps> = (props) => {
-  // const [users, setUsers] = useState<UserType[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<string>('');
-
-  // const url = 'https://jsonplaceholder.typicode.com/users';
-
-  // const { status , data, error } = useFetch<UserType[]>(url)
-  // console.log({status, data, error});
-
-  // console.log(props.user);
-
   const filterUser = props.user?.filter(
     (user) => user.id === props.post?.userId
   );

@@ -1,11 +1,5 @@
 import { FC } from 'react';
-
-type CommentType = {
-  postId: number;
-  id: number;
-  name: string;
-  body: string;
-};
+import { CommentType } from '../types/types';
 
 type CommentProps = {
   comment: CommentType;

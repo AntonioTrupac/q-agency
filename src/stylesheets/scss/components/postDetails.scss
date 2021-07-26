@@ -1,3 +1,10 @@
+.details-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .details {
   display: flex;
   flex-direction: column;
@@ -5,7 +12,10 @@
   border: 2px solid black;
   border-radius: 20px;
   height: 700px;
-  position: relative;
+
+  @media (max-width: 1280px) {
+    height: 100%;
+  }
 
   &__title {
     padding: 1rem;

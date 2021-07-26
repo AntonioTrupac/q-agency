@@ -1,8 +1,13 @@
 .user-name {
-  padding: 1rem 0;
+  padding: 1rem 2rem;
   position: absolute;
   bottom: 0;
   right: 2rem;
+
+  @media (max-width: 1280px) {
+    position: static;
+    text-align: right;
+  }
 
   & > p {
     font-size: 20px;

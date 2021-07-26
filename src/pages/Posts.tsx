@@ -1,5 +1,4 @@
-import { FC, useCallback, useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import { FC, useEffect, useContext } from 'react';
 import { PostType } from '../types/types';
 import { Post } from '../components/Post';
 import { UserDetails } from '../components/UserDetails';
@@ -28,13 +27,15 @@ export const Posts: FC<PostsProps> = (props) => {
   return (
     <div className='post-container'>
       {loading || context?.loading ? (
-        <div className='spinner'>
-          <ReactLoading
-            color='black'
-            type='spin'
-            width='300px'
-            height='300px'
-          />
+        <div className='spinner-container'>
+          <div className='spinner'>
+            <ReactLoading
+              color='black'
+              type='spin'
+              width='200px'
+              height='200px'
+            />
+          </div>
         </div>
       ) : (
         <>
@@ -50,12 +51,19 @@ export const Posts: FC<PostsProps> = (props) => {
                     {filterComments?.map((comment) => {
                       return (
                         <div key={comment.id}>
-                          <Comments comment={comment} />
+                          <Comments
+                            comment={comment}
+                            helloMessage={props.helloMessage}
+                          />
                         </div>
                       );
                     })}
                   </div>
-                  <UserDetails post={post} user={context?.dataUser} />
+                  <UserDetails
+                    post={post}
+                    user={context?.dataUser}
+                    helloMessage={props.helloMessage}
+                  />
                 </Post>
               </div>
             );

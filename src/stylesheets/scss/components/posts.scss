@@ -6,6 +6,12 @@
   column-gap: 15px;
   margin-top: 80px;
 
+  @media (max-width: 1280px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-auto-rows: auto;
+  }
+
   .post-comment {
     margin-top: 10px;
 
@@ -28,6 +34,11 @@
     width: 600px;
     height: 600px;
     position: relative;
+
+    @media (max-width: 1280px) {
+      width: 100%;
+      height: 100%;
+    }
 
     &:last-child {
       margin-bottom: 0;

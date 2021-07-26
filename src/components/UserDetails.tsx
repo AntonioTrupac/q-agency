@@ -1,5 +1,4 @@
-import { FC, useState, useCallback, useEffect } from 'react';
-import axios from 'axios';
+import { FC, useEffect } from 'react';
 import { PostType, UserType } from '../types/types';
 
 type UserProps = {
@@ -7,9 +6,16 @@ type UserProps = {
   isLoading?: boolean;
   error?: string;
   post?: PostType | null;
+  helloMessage?: string;
 };
 
 export const UserDetails: FC<UserProps> = (props) => {
+  //   const component = 'from User';
+
+  //   useEffect(() => {
+  //     console.log(`${props.helloMessage}${component}`);
+  //   }, [props.helloMessage]);
+
   const filterUser = props.user?.filter(
     (user) => user.id === props.post?.userId
   );

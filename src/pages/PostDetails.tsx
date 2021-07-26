@@ -33,15 +33,17 @@ export const PostDetails: FC<PostDetailsProps> = (props) => {
   );
 
   return (
-    <div>
+    <div className='details-container'>
       {loading || context?.loading ? (
-        <div className='spinner'>
-          <ReactLoading
-            color='black'
-            type='spin'
-            width='300px'
-            height='300px'
-          />
+        <div className='spinner-container'>
+          <div className='spinner'>
+            <ReactLoading
+              color='black'
+              type='spin'
+              width='200px'
+              height='200px'
+            />
+          </div>
         </div>
       ) : (
         <div className='details'>
@@ -50,12 +52,16 @@ export const PostDetails: FC<PostDetailsProps> = (props) => {
           {filterComments?.map((comment) => {
             return (
               <div key={comment.id} className='details__comments'>
-                <Comments comment={comment} />
+                <Comments comment={comment} helloMessage={props.helloMessage} />
               </div>
             );
           })}
           <div>
-            <UserDetails post={data} user={context?.dataUser} />
+            <UserDetails
+              post={data}
+              user={context?.dataUser}
+              helloMessage={props.helloMessage}
+            />
           </div>
         </div>
       )}

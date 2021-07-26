@@ -1,10 +1,34 @@
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3rem;
+
+  & > p {
+    font-size: 24px;
+    font-weight: 5s00;
+  }
+
+  & > input {
+    padding: 0.5rem 1rem;
+    border: 1px solid black;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+
+  & input:focus-visible {
+    outline: none;
+  }
+}
+
 .post-container {
   display: grid;
   grid-template-columns: 600px 600px;
   grid-auto-rows: 620px;
   justify-content: center;
   column-gap: 15px;
-  margin-top: 80px;
 
   @media (max-width: 1280px) {
     grid-template-columns: 1fr;

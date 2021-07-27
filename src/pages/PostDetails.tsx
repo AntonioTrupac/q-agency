@@ -1,11 +1,12 @@
 import { FC, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { PostType } from '../types/types';
 import { UserDetails } from '../components/User';
 import { StoreContext } from '../context/FetchContext';
 import { useFetch } from '../hooks/useFetch';
 import { Comments } from '../components/Comments';
 import ReactLoading from 'react-loading';
+import { Link } from 'react-router-dom';
 
 type PostDetailsProps = {
   helloMessage: string;
@@ -21,7 +22,7 @@ export const PostDetails: FC<PostDetailsProps> = (props) => {
   const { data, loading } = useFetch<PostType>(
     `https://jsonplaceholder.typicode.com/posts/${id}`
   );
-
+  const history = useHistory();
   const hello = 'post details component';
 
   useEffect(() => {
@@ -31,6 +32,10 @@ export const PostDetails: FC<PostDetailsProps> = (props) => {
   const filterComments = context?.dataComments?.filter(
     (comment) => comment.postId === data?.id
   );
+
+  const goBack = () => {
+    history.goBack();
+  };
 
   return (
     <div className='details-container'>
@@ -62,6 +67,12 @@ export const PostDetails: FC<PostDetailsProps> = (props) => {
               user={context?.dataUser}
               helloMessage={props.helloMessage}
             />
+          </div>
+          <div className='button-container'>
+            <button type='button' onClick={goBack}>
+              {' '}
+              Go back{' '}
+            </button>
           </div>
         </div>
       )}

@@ -1,17 +1,14 @@
+@use '../partials/' as partials;
+
 .input-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 3rem;
 
-  & > p {
-    font-size: 24px;
-    font-weight: 5s00;
-  }
-
   & > input {
     padding: 0.5rem 1rem;
-    border: 1px solid black;
+    border: 1px solid partials.$black;
     border-radius: 20px;
     font-size: 16px;
     cursor: pointer;
@@ -20,6 +17,10 @@
 
   & input:focus-visible {
     outline: none;
+  }
+
+  & input::placeholder {
+    text-align: center;
   }
 }
 
@@ -41,7 +42,7 @@
 
     &__heading {
       margin-bottom: 5px;
-      border-bottom: 1px solid rgb(105, 0, 0);
+      border-bottom: 1px solid partials.$red;
     }
   }
 }
@@ -51,7 +52,7 @@
 
   &__item {
     padding: 1rem;
-    border: 2px solid rgb(105, 0, 0);
+    border: 2px solid partials.$red;
     border-radius: 5px;
     margin-bottom: 2rem;
     cursor: pointer;
@@ -69,25 +70,25 @@
     }
 
     .title {
-      border-bottom: 2px solid rgb(105, 0, 0);
+      border-bottom: 2px solid partials.$red;
       margin-bottom: 15px;
 
       & > p {
         text-transform: uppercase;
         font-size: 16px;
-        color: rgb(144, 60, 60);
+        color: partials.$light-red;
       }
     }
 
     .post-body {
-      border: 1px solid black;
+      border: 1px solid partials.$black;
       padding: 1rem;
       border-radius: 5px;
       margin: 5px 0;
 
       & > p {
         font-size: 18px;
-        color: rgb(144, 60, 60);
+        color: partials.$light-red;
       }
     }
   }

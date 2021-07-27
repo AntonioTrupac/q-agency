@@ -1,7 +1,7 @@
 import { FC, useEffect, useContext, useState } from 'react';
 import { PostType } from '../types/types';
 import { Post } from '../components/Post';
-import { UserDetails } from '../components/UserDetails';
+import { UserDetails } from '../components/User';
 import { StoreContext } from '../context/FetchContext';
 import { Comments } from '../components/Comments';
 import { useFetch } from '../hooks/useFetch';
@@ -32,7 +32,6 @@ export const Posts: FC<PostsProps> = (props) => {
   return (
     <>
       <div className='input-container'>
-        <p>Search:</p>{' '}
         <input
           placeholder='Search'
           type='text'

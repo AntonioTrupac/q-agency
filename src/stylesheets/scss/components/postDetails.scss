@@ -1,3 +1,5 @@
+@use '../partials/' as partials;
+
 .details-container {
   min-height: 100vh;
   display: flex;
@@ -9,7 +11,7 @@
   display: flex;
   flex-direction: column;
   margin: 6rem 0;
-  border: 2px solid black;
+  border: 2px solid partials.$black;
   border-radius: 20px;
   height: 700px;
   position: relative;
@@ -23,13 +25,13 @@
     font-size: 30px;
     font-weight: 700;
     text-transform: capitalize;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid partials.$black;
   }
 
   &__body {
     padding: 1rem;
     font-size: 24px;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid partials.$black;
   }
 
   &__body:first-letter {

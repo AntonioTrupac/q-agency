@@ -1,7 +1,7 @@
 import { FC, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { PostType } from '../types/types';
-import { UserDetails } from '../components/UserDetails';
+import { UserDetails } from '../components/User';
 import { StoreContext } from '../context/FetchContext';
 import { useFetch } from '../hooks/useFetch';
 import { Comments } from '../components/Comments';
